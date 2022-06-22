@@ -1,0 +1,63 @@
+main.catalogo {
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+}
+
+.contenedor-central {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.card .card-body {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.nav-item {
+  margin: 5px;
+}
+
+main.estandar {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+main.estandar .titulo {
+
+}
+
+main.estandar .datos {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+main.estandar .datos .cabecera {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  font-weight: 600;
+}
+
+main.estandar .datos .cabecera .fila {
+  border-bottom: 1px solid #666;
+}
+
+main.estandar .datos .detalle {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  font-weight: normal;
+}
+
+main.estandar .datos .detalle .fila{
+  border-bottom: 1px solid #AAA;
+}
+
+main.estandar .datos .detalle .fila .columna{
+  padding: 2px;
+}
