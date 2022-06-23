@@ -9,6 +9,7 @@ class Producto {
 	public $ccategoria;
 	public $stock;
 	public $estado;
+	public $valido;
 
 	public function __construct($properties=[]){
         if (!empty($properties)) {
