@@ -1,8 +1,7 @@
 <?php
-class Usuario {
-	public $usuario;
-	public $tipo;
-	public $estado;
+class Categoria {
+	public $id;
+	public $nombre;
 
 	public function __construct($properties=[]){
         if (!empty($properties)) {

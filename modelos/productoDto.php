@@ -1,7 +1,13 @@
 <?php
-class Usuario {
-	public $usuario;
-	public $tipo;
+class Producto {
+	public $id;
+	public $nombre;
+	public $descripcion;
+	public $descripcionlarga;
+	public $precio;
+	public $categoria_id;
+	public $ccategoria;
+	public $stock;
 	public $estado;
 
 	public function __construct($properties=[]){
