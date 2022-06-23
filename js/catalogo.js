@@ -3,6 +3,55 @@ $(document).ready(function () {
   var datosProductos;
   cargardatos();
   actualizarfiltro();
+  $("#cambiar-lugarentrega").on("click", function(evt) { cambiarlugarentrega(evt); });
+
+  function cambiarlugarentrega(evt) {
+    var oElem = $(evt.currentTarget);
+    var sElem = oElem.attr("data-id");
+    $.get( "./controladores/localCtl.php", function( data ) {
+      cargalocalsuccess(data, sElem);
+      $("#set-local-recojo").on("click", function(evt) { setlocalrecojo(evt); });
+    });
+  }
+
+  function cargalocalsuccess(data, sActivo) {
+    var items = [];
+    var botones = [];
+
+    items.push("<form class='form form-horizontal'>");
+    items.push("<div class='row'>");
+    items.push("<div class='col-md-4'>Local:</div>");
+    items.push("</div>");
+    items.push("<div class='col-md-8'>");
+    items.push("</div>");
+    items.push("<select id='select-local' name='select-local' class='form-control'>");
+    $.each( data, function( key, val ) {
+      items.push("<option value='"+val.id+"' "+(val.id==sActivo ? "selected" : "")+">"+val.nombre+"</option>");
+    });
+    items.push("</select>");
+    items.push("</form>");
+
+    botones.push("<button type='button' id='set-local-recojo' class='btn btn-success'>Aceptar</button>");
+    botones.push("<button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Cerrar</button>");
+
+    $("#modal-detalle .modal-title").html("Seleccionar Local de recojo");
+    $("#modal-detalle .modal-body").html(items.join(""));
+    $("#modal-detalle .modal-footer").html(botones.join(""));
+    $("#modal-detalle").modal("show");
+  }
+
+  function setlocalrecojo(evt) {
+    oElem = $("#select-local");
+    xElem = oElem.find(" option:selected");
+    $.post("./controladores/localCtl.php", { id: xElem.val(), accion: "SL" }, function(data) { setlocalrecojosuccess(data); })
+
+  }
+
+  function setlocalrecojosuccess(data) {
+    if(data.resultado.codigo==0) {
+      
+    }
+  }
 
   function cargardatos() {
     $.get( "./controladores/categoriaCtl.php", function( data ) {
@@ -26,6 +75,7 @@ $(document).ready(function () {
         items.push($(val).attr("data-id"));
       }
     });
+    console.log(items);
     $.get( "./controladores/productoCtl.php", { a: "L", ids: items.join("-") }, function( data ) { actualizarfiltrosuccess(data); });
   }
 
@@ -40,7 +90,7 @@ $(document).ready(function () {
       items.push("    <p class='card-text'>Precio: "+val.precio+"</p>");
       items.push("    <p class='card-text'>Stock: "+val.stock+"</p>");
       items.push("    <a href='#' class='btn btn-secondary btn-sm ver-detalle' data-id='"+val.id+"' data-pos='"+key+"'>Ver detalles</a>");
-      items.push("    <a href='#' class='btn btn-success btn-sm agregar-carrito' data-id='"+val.id+"' data-pos='"+key+"'>Agregar al carrito</a>");
+      items.push("    <a href='#' class='btn btn-success btn-sm agregar-carrito "+(val.valido=="1" && val.stock>0 ? "" : "disabled")+"' data-id='"+val.id+"' data-pos='"+key+"'>Agregar al carrito</a>");
       items.push("  </div>");
       items.push("</div>");
     });
@@ -51,20 +101,16 @@ $(document).ready(function () {
   function verdetalle(evt) {
     var oObj = $(evt.currentTarget);
     var oData = datosProductos[oObj.attr("data-pos")];
-    console.log("oObj", oObj);
+    //console.log("oObj", oObj);
     var items = [];
     var botones = [];
     items.push("<form class='form form-horizontal'>");
     items.push("<div class='row'>");
     items.push("<div class='col-md-4'><h5 class=''>"+oData.nombre+"</h5></div>");
-    items.push("<div class='col-md-8'>"+oData.nombre+"</div>");
-    items.push("</div>");
-    items.push("<div class='row'>");
-    items.push("<div class='col-md-4'>Descripcion:</div>");
     items.push("<div class='col-md-8'>"+oData.descripcion+"</div>");
     items.push("</div>");
     items.push("<div class='row'>");
-    items.push("<div class='col-md-4'>Especificaciones:</div>");
+    items.push("<div class='col-md-4'><div class='card' style=\"background-image: url('./upload/p_"+oData.id+".jpg');height:100%;\"></div></div>");
     items.push("<div class='col-md-8'>"+oData.descripcionlarga+"</div>");
     items.push("</div>");
     items.push("<div class='row'>");
@@ -77,12 +123,24 @@ $(document).ready(function () {
     items.push("</div>");
     items.push("</form>");
 
-    botones.push("<button type='button' class='btn btn-success'>Agregar al carrito</button>");
+    botones.push("<button type='button' id='det-agregar-carrito' class='btn btn-success "+(oData.valido=="1" && oData.stock>0 ? "" : "disabled")+"'>Agregar al carrito</button>");
     botones.push("<button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Cerrar</button>");
 
     $("#modal-detalle .modal-title").html("Detalle de Producto");
     $("#modal-detalle .modal-body").html(items.join(""));
     $("#modal-detalle .modal-footer").html(botones.join(""));
+    $("#modal-detalle #det-agregar-carrito").on("click", function(evt) { agregarcarrito(evt); });
     $("#modal-detalle").modal("show");
+  }
+
+  function agregarcarrito(evt) {
+    var oObj = $(evt.currentTarget);
+    var sElem = oObj.attr("data-id");
+    $.post("./controladores/carritoCtl.php", { id: sElem, accion: "AC" }, function(evt) { agregarcarritosuccess(evt); })
+
+  }
+
+  function agregarcarritosuccess(evt) {
+
   }
 });
