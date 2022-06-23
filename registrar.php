@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-			<meta charset="utf-8">			<meta name="viewport" content="width=device-width, initial-scale=1">
-			<link href="css/bootstrap.min.css" rel="stylesheet">
-			<script src="js/bootstrap.min.js"></script>
+			<meta charset="utf-8">
+			<meta name="viewport" content="width=device-width, initial-scale=1">
 			<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 			<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
@@ -35,6 +34,46 @@
 						<input type="password" name="contrasena" class="form-control" placeholder="Contraseña" />
 						<?php if (!empty($contrasenaError)) { ?>
 							<span class="help-inline"><?php echo $contrasenaError;?></span>
+						<?php } ?>
+					</div>
+					<br />
+					<div class="control-group <?php echo !empty($nombreError)?'error':'';?>">
+							<label class="control-label">Nombres:</label>
+					</div>
+					<div class="controls">
+						<input type="text" name="nombre" class="form-control" placeholder="Nombres" />
+						<?php if (!empty($nombreError)) { ?>
+							<span class="help-inline"><?php echo $nombreError;?></span>
+						<?php } ?>
+					</div>
+					<br />
+					<div class="control-group <?php echo !empty($apellidoError)?'error':'';?>">
+							<label class="control-label">Apellidos:</label>
+					</div>
+					<div class="controls">
+						<input type="text" name="apellido" class="form-control" placeholder="Apellido" />
+						<?php if (!empty($apellidoError)) { ?>
+							<span class="help-inline"><?php echo $apellidoError;?></span>
+						<?php } ?>
+					</div>
+					<br />
+					<div class="control-group <?php echo !empty($correoError)?'error':'';?>">
+							<label class="control-label">Correo electrónico:</label>
+					</div>
+					<div class="controls">
+						<input type="text" name="correo" class="form-control" placeholder="Correo electrónico" />
+						<?php if (!empty($correoError)) { ?>
+							<span class="help-inline"><?php echo $correoError;?></span>
+						<?php } ?>
+					</div>
+					<br />
+					<div class="control-group <?php echo !empty($telefonoError)?'error':'';?>">
+							<label class="control-label">Número de Celular:</label>
+					</div>
+					<div class="controls">
+						<input type="text" name="telefono" class="form-control" placeholder="Teléfono" />
+						<?php if (!empty($telefonoError)) { ?>
+							<span class="help-inline"><?php echo $telefonoError;?></span>
 						<?php } ?>
 					</div>
 					<br />
