@@ -37,15 +37,27 @@ header('Content-Type: application/json; charset=utf-8');
 					$accion = isset($_POST["accion"]) ? $_POST["accion"] : "";
 					switch ($accion) {
 						case 'SL':
-							$sql = "Update usuario set local_id=? where id=? ";
+							$sql = "select id, nombre from local where id=? ";
+							$q = $pdo->prepare($sql);
+							$q->execute(array($id));
+							$lLocal = $q->fetchAll(PDO::FETCH_CLASS, "Local");
+							$sLocal = "";
+							if(count($lLocal)>0) {
+								$sLocal = $lLocal[0]->nombre;
+							}
+							$sql = "update usuario set local_id=? where id=? ";
 							$q = $pdo->prepare($sql);
 							$q->execute(array($id, $oUsuario->id));
-							//$_SESSION['_usuario']
+							$oUsuario->local_id=$id;
+							$oUsuario->clocal=$sLocal;
+							$_SESSION['_usuario'] = $oUsuario;
 							echo json_encode([ "resultado"=> [ "codigo"=> 0, "mensaje" => "El proceso se completo con exito" ]]);
 							break;
 						default:
 							break;
 					}
+				} else {
+					echo json_encode([ "resultado"=> [ "codigo"=> 1, "mensaje" => "No ha iniciado sesión" ]]);
 				}
 				break;
 		}
