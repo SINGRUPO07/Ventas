@@ -60,8 +60,7 @@ if(!empty($oUsuario)) {
 					<li><a href="usuario">Gestión de Usuarios</a></li>
 					<li><a href="">Gestión de Productos</a></li>
 					<li><a href="">Gestión de Clientes</a></li>
-					<li><a href="">Gestión de Ordenes</a></li>
-					<li><a href="">Gestión de Ordenes</a></li>
+					<li><a href="">Gestión de Pedidos</a></li>
 					<li><a href="">Gestión de Locales</a></li>
 					<li><a href="">Gestión de Medios de Pago</a></li>
 				</ul>
