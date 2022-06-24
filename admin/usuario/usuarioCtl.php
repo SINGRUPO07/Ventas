@@ -16,11 +16,12 @@ header('Content-Type: application/json; charset=utf-8');
 				$sWhere = "";
 				$id = isset($_GET["id"]) ? $_GET["id"] : "";
 				if(!empty($id)) {
-					$sWhere = "Where id=?";
+					$sWhere = "Where u.id=?";
 				}
-				$sql = "SELECT id, usuario, estado, case when estado=1 then 'ACTIVO' else 'INACTIVO' end cestado, ";
-				$sql.= " tipo, case when tipo=1 then 'ADMINISTRADOR' else 'CLIENTE' end ctipo ";
-				$sql.= " FROM usuario " . $sWhere;
+				$sql = "SELECT u.id, u.usuario, u.estado, u.nombre, u.apellido, u.correo, u.telefono, u.local_id, l.nombre as clocal, ";
+				$sql.= " case when u.estado=1 then 'ACTIVO' else 'INACTIVO' end cestado, ";
+				$sql.= " tipo, case when u.tipo=1 then 'ADMINISTRADOR' else 'CLIENTE' end ctipo ";
+				$sql.= " FROM usuario u left join local l on u.local_id=l.id " . $sWhere;
 				$q = $pdo->prepare($sql);
 				if(!empty($id)) {
 					$q->execute(array($id));
