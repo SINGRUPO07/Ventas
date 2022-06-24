@@ -43,13 +43,19 @@ $(document).ready(function () {
   function setlocalrecojo(evt) {
     oElem = $("#select-local");
     xElem = oElem.find(" option:selected");
-    $.post("./controladores/localCtl.php", { id: xElem.val(), accion: "SL" }, function(data) { setlocalrecojosuccess(data); })
+    $.post("./controladores/localCtl.php", { id: xElem.val(), accion: "SL" }, function(data) {
+      setlocalrecojosuccess( data, { id: xElem.val(), nombre: xElem.html() } );
+      $("#modal-detalle").modal("hide");
+    });
 
   }
 
-  function setlocalrecojosuccess(data) {
+  function setlocalrecojosuccess(data, obj) {
     if(data.resultado.codigo==0) {
-      
+      console.log(data, obj);
+      var oElem = $("#cambiar-lugarentrega");
+      oElem.attr("data-id", obj.id);
+      oElem.html(obj.nombre);
     }
   }
 
