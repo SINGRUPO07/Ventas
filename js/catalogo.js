@@ -3,9 +3,9 @@ $(document).ready(function () {
   var datosProductos;
   cargardatos();
   actualizarfiltro();
-  $("#cambiar-lugarentrega").on("click", function(evt) { cambiarlugarentrega(evt); });
+  $("#cambiar-localrecojo").on("click", function(evt) { cambiarlocalrecojo(evt); });
 
-  function cambiarlugarentrega(evt) {
+  function cambiarlocalrecojo(evt) {
     var oElem = $(evt.currentTarget);
     var sElem = oElem.attr("data-id");
     $.get( "./controladores/localCtl.php", function( data ) {
@@ -53,7 +53,7 @@ $(document).ready(function () {
   function setlocalrecojosuccess(data, obj) {
     if(data.resultado.codigo==0) {
       console.log(data, obj);
-      var oElem = $("#cambiar-lugarentrega");
+      var oElem = $("#cambiar-localrecojo");
       oElem.attr("data-id", obj.id);
       oElem.html(obj.nombre);
     }
@@ -81,7 +81,6 @@ $(document).ready(function () {
         items.push($(val).attr("data-id"));
       }
     });
-    console.log(items);
     $.get( "./controladores/productoCtl.php", { a: "L", ids: items.join("-") }, function( data ) { actualizarfiltrosuccess(data); });
   }
 
@@ -101,6 +100,7 @@ $(document).ready(function () {
       items.push("</div>");
     });
     $("main.catalogo .contenedor-central").html(items.join(""));
+    $("main.catalogo .agregar-carrito").on("click", function(evt) { agregarcarrito(evt); });
     $("main.catalogo .contenedor-central .producto .ver-detalle").on("click", function(evt) { verdetalle(evt); });
   }
 
@@ -129,7 +129,7 @@ $(document).ready(function () {
     items.push("</div>");
     items.push("</form>");
 
-    botones.push("<button type='button' id='det-agregar-carrito' class='btn btn-success "+(oData.valido=="1" && oData.stock>0 ? "" : "disabled")+"'>Agregar al carrito</button>");
+    botones.push("<button type='button' id='det-agregar-carrito' data-id='"+oData.id+"' class='btn btn-success "+(oData.valido=="1" && oData.stock>0 ? "" : "disabled")+"'>Agregar al carrito</button>");
     botones.push("<button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Cerrar</button>");
 
     $("#modal-detalle .modal-title").html("Detalle de Producto");
@@ -142,11 +142,16 @@ $(document).ready(function () {
   function agregarcarrito(evt) {
     var oObj = $(evt.currentTarget);
     var sElem = oObj.attr("data-id");
-    $.post("./controladores/carritoCtl.php", { id: sElem, accion: "AC" }, function(evt) { agregarcarritosuccess(evt); })
+    $.post("./carrito/carritoCtl.php", { id: sElem, accion: "AC" }, function(data) { agregarcarritosuccess(data); })
 
   }
 
-  function agregarcarritosuccess(evt) {
-
+  function agregarcarritosuccess(data) {
+    var r = data.resultado;
+    if(r.codigo==0) {
+      alert(r.mensaje);
+    } else {
+      alert(r.mensaje+"\n\n"+r.mensaje_detalle);
+    }
   }
 });
