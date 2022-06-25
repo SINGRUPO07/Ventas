@@ -1,8 +1,27 @@
-main {
-  margin-top: 5px;
-  padding: 5px;
+main.catalogo {
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+}
+
+.contenedor-central {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.card .card-body {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .nav-item {
   margin: 5px;
+}
+
+.card {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
 }
