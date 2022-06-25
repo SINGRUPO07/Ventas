@@ -1,0 +1,32 @@
+.nav-item {
+  margin: 5px;
+}
+
+main.pedidos {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.cabecera {
+  margin: 2px 5px;
+}
+
+.cabecera-central {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  font-weight: 600;
+}
+
+.contenedor-central {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.contenedor-central .pedido {
+  border-bottom: 1px solid #888;
+  padding: 2px;
+  margin: 3px;
+}

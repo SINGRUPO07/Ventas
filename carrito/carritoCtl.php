@@ -42,7 +42,7 @@ if(!empty($oUsuario)) {
 					$id = isset($_POST["id"]) ? $_POST["id"] : "";
 					$accion = isset($_POST["accion"]) ? $_POST["accion"] : "";
 					switch ($accion) {
-						case 'AC':
+						case 'AC':	// Agregar al Carrito
 							try {
 	        			$pdo->beginTransaction();
 								$sql = "select id, estado from carrito where usuario_id=? And estado=1";
@@ -79,12 +79,12 @@ if(!empty($oUsuario)) {
 								$pdo->commit();
 							} catch(PDOException $e) {
 		            $pdo->rollBack();
-								$resultado=[ "resultado"=> [ "codigo"=> 0, "mensaje" => "Se encontró un error en la ejecución",
+								$resultado=[ "resultado"=> [ "codigo"=> 1, "mensaje" => "Se encontró un error en la ejecución",
 									"mensaje_detalle"=> $e->getMessage()
 								 ]];
 					    }
 							break;
-						case 'QC':
+						case 'QC':	// Quitar producto del Carrito
 							try {
 	        			$pdo->beginTransaction();
 								$sql = "select id from carrito where usuario_id=? And estado=1";
@@ -102,7 +102,7 @@ if(!empty($oUsuario)) {
 								$pdo->commit();
 							} catch(PDOException $e) {
 		            $pdo->rollBack();
-								$resultado=[ "resultado"=> [ "codigo"=> 0, "mensaje" => "Se encontró un error en la ejecución",
+								$resultado=[ "resultado"=> [ "codigo"=> 1, "mensaje" => "Se encontró un error en la ejecución",
 									"mensaje_detalle"=> $e->getMessage()
 								 ]];
 					    }
@@ -118,7 +118,7 @@ if(!empty($oUsuario)) {
 		Database::disconnect();
 	}
 } else {
-	$resultado = [ resultado=> [ codigo=> 1, mensaje => "No ha iniciado sesión" ]];
+	$resultado = [ "resultado"=> [ "codigo"=> 1, "mensaje" => "No ha iniciado sesión" ]];
 }
 echo json_encode($resultado);
 ?>
