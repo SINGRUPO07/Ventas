@@ -4,7 +4,6 @@ $(document).ready(function () {
 
   function cargardatos() {
     $.get( "usuarioCtl.php", function( data ) {
-      // console.log("data", data);
       datosUsuario = data;
       var items = [];
       $.each( data, function( key, val ) {
