@@ -1,5 +1,5 @@
 <?php
-include_once("modelos/usuarioDto.php");
+include_once("./modelos/usuarioDto.php");
 ob_start();
 session_start();
 require 'database.php';
@@ -18,21 +18,21 @@ if ( !empty($_POST)) {
 		$contrasenaError = 'Por favor escribe su contrasena';
 		$valid = false;
 	}
-
+	// var_dump($_POST);
+	// exit();
 	if ($valid) {
 		$pdo = Database::connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		$sql = "SELECT u.id, u.usuario, u.estado, u.tipo, u.local_id, l.nombre as clocal ";
-		$sql.= " FROM usuario u join local l on u.local_id=l.id WHERE usuario=? AND contrasena=? AND estado=1";
+		$sql.= " FROM usuario u left join local l on u.local_id=l.id WHERE u.usuario=? AND u.contrasena=? AND u.estado=1";
 		$q = $pdo->prepare($sql);
 		$q->execute(array($usuario, hash('sha3-512' , $contrasena)));
 		$lUsuario = $q->fetchAll(PDO::FETCH_CLASS, "Usuario");
 		Database::disconnect();
 		if(count($lUsuario)>0) {
 			$oUsuario = $lUsuario[0];
-			//var_dump($oUsuario);
 			if($oUsuario->estado==1) {
-				$_SESSION['_usuario'] = $oUsuario; //->toArray();
+				$_SESSION['_usuario'] = $oUsuario;
 				switch($oUsuario->tipo) {
 					case 1:
 						header("Location: admin");

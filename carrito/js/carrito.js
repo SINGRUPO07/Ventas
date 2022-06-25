@@ -52,7 +52,6 @@ $(document).ready(function () {
 
   function setlocalrecojosuccess(data, obj) {
     if(data.resultado.codigo==0) {
-      console.log(data, obj);
       var oElem = $("#cambiar-localrecojo");
       oElem.attr("data-id", obj.id);
       oElem.html(obj.nombre);
@@ -122,7 +121,6 @@ $(document).ready(function () {
   }
 
   function quitarcarritosuccess(data) {
-    console.log("data", data);
     var r = data.resultado;
     if(r.codigo==0) {
       cargardatos();
@@ -162,7 +160,7 @@ $(document).ready(function () {
     items.push("    <div class='row producto'>");
     items.push("      <div class='col-md-4'>Tipo de Pago: </div>");
     items.push("      <div class='col-md-8'>");
-    items.push("        <select id='tipopago' name='tipopago' class='tipo-pago form-control'>");
+    items.push("        <select id='tipo-pago' name='tipopago' class='tipo-pago form-control'>");
     items.push("        </select>");
     items.push("      </div>");
     items.push("    </div>");
@@ -183,14 +181,13 @@ $(document).ready(function () {
     $.each( data, function( key, val ) {
       items.push("<option value='"+val.id+"'>"+val.nombre+"</option>");
     });
-    $("main.carrito .contenedor-pedido #tipopago").html(items.join(""));
+    $("main.carrito .contenedor-pedido #tipo-pago").html(items.join(""));
   }
 
   function generarpedido(evt){
-    $.post("../controladores/pedidoCtl.php", { id: sElem, accion: "QC" }, function(data) { quitarcarritosuccess(data); });
+    oElem = $("main.carrito .contenedor-pedido #tipo-pago");
+    xElem = oElem.find(" option:selected");
+    $.post("../pedido/pedidoCtl.php", { "tipopago_id": xElem.val(), accion: "GP" }, function(data) { quitarcarritosuccess(data); });
   }
 
-  function generarpedidosuccess(data){
-
-  }
 });

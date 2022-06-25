@@ -52,7 +52,6 @@ $(document).ready(function () {
 
   function setlocalrecojosuccess(data, obj) {
     if(data.resultado.codigo==0) {
-      console.log(data, obj);
       var oElem = $("#cambiar-localrecojo");
       oElem.attr("data-id", obj.id);
       oElem.html(obj.nombre);
