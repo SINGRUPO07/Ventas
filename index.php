@@ -42,10 +42,11 @@ $oUsuario = isset($_SESSION['_usuario']) ? new Usuario($_SESSION['_usuario']) : 
 										<li class="nav-item"><a href="./admin" class="active" aria-label="Toggle navigation">Administración</a></li>
 									<?php } else { ?>
 										<li class="nav-item">
-											<a href="#" id="cambiar-lugarentrega" class="active" aria-label="Toggle navigation" data-id="<?php echo isset($oUsuario->local_id) ? $oUsuario->local_id : "" ?>">
+											<a href="#" id="cambiar-localrecojo" class="active" aria-label="Toggle navigation" data-id="<?php echo isset($oUsuario->local_id) ? $oUsuario->local_id : "" ?>">
 												<?php echo isset($oUsuario->clocal) ? $oUsuario->clocal : "Sel. Local recojo" ?>
 											</a>
 										</li>
+										<li class="nav-item"><a href="./pedido" class="active" aria-label="Toggle navigation">Ver Pedidos</a></li>
 										<li class="nav-item"><a href="./carrito" class="active" aria-label="Toggle navigation">Ver Carrito</a></li>
 									<?php } ?>
 									<li class="nav-item"><a href="logout.php" aria-label="Toggle navigation">Cerrar sesión</a></li>
